@@ -13,7 +13,7 @@ a mask of changed bits in MAC addresses of upper devices. This allows
 handling VLANs and bridge devices with different addresses (as long as
 they are not too different).
 
-Signed-off-by: Felix Fietkau <nbd@openwrt.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
@@ -102,7 +102,7 @@ Signed-off-by: Felix Fietkau <nbd@openwrt.org>
  	return 0;
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -1602,6 +1602,8 @@ struct net_device {
+@@ -1603,6 +1603,8 @@ struct net_device {
  	struct netdev_hw_addr_list	mc;
  	struct netdev_hw_addr_list	dev_addrs;
  

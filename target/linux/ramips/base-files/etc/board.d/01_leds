@@ -30,7 +30,8 @@ br-6475nd|\
 mzk-w300nh2)
 	set_wifi_led "$board:amber:wlan"
 	;;
-a5-v11)
+a5-v11|\
+cs-qr10)
 	ucidef_set_led_default "power" "POWER" "$board:red:power" "1"
 	;;
 ai-br100)
@@ -45,6 +46,7 @@ all0239-3g|\
 hw550-3g|\
 mofi3500-3gn|\
 sap-g3200u3|\
+sk-wb8|\
 wf-2881)
 	set_usb_led "$board:green:usb"
 	;;
@@ -75,6 +77,13 @@ br-6425)
 broadway)
 	set_usb_led "$board:red:diskmounted"
 	set_wifi_led "$board:red:wps_active"
+	;;
+c50)
+	ucidef_set_led_default "power" "power" "tp-link:blue:power" "0"
+	ucidef_set_led_netdev "lan" "lan" "tp-link:blue:lan" "eth0.2"
+	set_usb_led "tp-link:blue:usb"
+	ucidef_set_led_wlan "wlan2g" "wlan2g" "tp-link:blue:wlan2g" "phy1radio"
+	ucidef_set_led_wlan "wlan5g" "wlan5g" "tp-link:blue:wlan5g" "phy0radio"
 	;;
 cf-wr800n)
 	ucidef_set_led_netdev "lan" "lan" "$board:white:ethernet" eth0.1
@@ -118,10 +127,12 @@ dir-615-h1)
 	ucidef_set_led_default "status" "Status LED (amber)" "$board:amber:status" "0"
 	set_wifi_led "rt2800pci-phy0::radio"
 	;;
-dir-620-d1)
+dir-620-d1|\
+mzk-ex300np)
 	set_wifi_led "$board:green:wifi"
 	;;
 dir-810l|\
+mzk-750dhp|\
 mzk-dp150n)
 	ucidef_set_led_default "power" "power" "$board:green:power" "1"
 	;;
@@ -182,7 +193,8 @@ miniembplug)
 	set_wifi_led "$board:red:wlan"
 	set_usb_led "$board:green:mobile"
 	;;
-miwifi-mini)
+miwifi-mini|\
+miwifi-nano)
 	ucidef_set_led_default "power" "power" "$board:red:status" "1"
 	;;
 miwifi-nano)
@@ -202,6 +214,10 @@ mpr-a2)
 mr-102n)
 	set_wifi_led "$board:green:wlan"
 	set_usb_led "$board:green:usb"
+	;;
+mzk-ex750np)
+	ucidef_set_led_default "power" "power" "$board:red:power" "1"
+	set_wifi_led "$board:red:wifi"
 	;;
 na930)
 	set_usb_led "$board:blue:status"
@@ -264,6 +280,13 @@ whr-600d)
 wnce2001)
 	set_wifi_led "$board:green:wlan"
 	;;
+wrh-300cr)
+	set_wifi_led "$board:green:wlan"
+	ucidef_set_led_netdev "lan" "lan" "$board:green:ethernet" "eth0"
+	;;
+wndr3700v5)
+	ucidef_set_led_default "power" "POWER" "$board:green:power" "0"
+	;;
 wt3020)
 	ucidef_set_led_default "power" "power" "$board:blue:power" "0"
 	;;
@@ -272,6 +295,11 @@ y1s)
 	ucidef_set_led_default "power" "power" "$board:blue:power" "1"
 	set_usb_led "$board:blue:usb"
 	set_wifi_led "$board:blue:wifi"
+	;;
+zbt-ape522ii)
+	ucidef_set_led_netdev "wlan2g4" "wlan1-link" "$board:green:wlan2g4" "wlan1"
+	ucidef_set_led_netdev "sys1" "wlan1" "$board:green:sys1" "wlan1" "tx rx"
+	ucidef_set_led_netdev "sys2" "wlan0" "$board:green:sys2" "wlan0" "tx rx"
 	;;
 zbt-wa05)
 	ucidef_set_led_default "power" "power" "$board:blue:power" "1"

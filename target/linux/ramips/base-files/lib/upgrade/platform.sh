@@ -34,6 +34,7 @@ platform_check_image() {
 	broadway|\
 	carambola|\
 	cf-wr800n|\
+	cs-qr10|\
 	d105|\
 	dap-1350|\
 	db-wrt01|\
@@ -49,6 +50,7 @@ platform_check_image() {
 	dir-620-a1|\
 	dir-620-d1|\
 	dir-810l|\
+	duzun-dm06|\
 	e1700|\
 	esr-9753|\
 	ex2700|\
@@ -86,7 +88,10 @@ platform_check_image() {
 	mpr-a2|\
 	mr-102n|\
 	mt7628|\
+	mzk-750dhp|\
 	mzk-dp150n|\
+	mzk-ex300np|\
+	mzk-ex750np|\
 	mzk-w300nh2|\
 	mzk-wdpr|\
 	nbg-419n|\
@@ -108,6 +113,7 @@ platform_check_image() {
 	rt-n56u|\
 	rut5xx|\
 	sap-g3200u3|\
+	sk-wb8|\
 	sl-r7205|\
 	tew-691gr|\
 	tew-692gr|\
@@ -124,6 +130,7 @@ platform_check_image() {
 	whr-300hp2|\
 	whr-600d|\
 	whr-g300n|\
+	widora-neo|\
 	witi|\
 	wizfi630a|\
 	wl-330n|\
@@ -133,8 +140,10 @@ platform_check_image() {
 	wli-tx4-ag300n|\
 	wmr-300|\
 	wnce2001|\
+	wndr3700v5|\
 	wr512-3gn|\
 	wr6202|\
+	wrh-300cr|\
 	wrtnode|\
 	wrtnode2r |\
 	wrtnode2p |\
@@ -146,9 +155,11 @@ platform_check_image() {
 	x8|\
 	y1|\
 	y1s|\
+	zbt-ape522ii|\
 	zbt-wa05|\
 	zbt-we826|\
 	zbt-wg2626|\
+	zbt-wg3526|\
 	zbt-wr8305rt|\
 	zte-q7|\
 	youku-yk1)
@@ -172,7 +183,8 @@ platform_check_image() {
 		}
 		return 0
 		;;
-	c20i)
+	c20i|\
+	c50)
 		[ "$magic" != "03000000" ] && {
 			echo "Invalid image type."
 			return 1

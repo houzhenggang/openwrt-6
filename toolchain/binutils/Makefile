@@ -17,6 +17,10 @@ ifeq ($(PKG_VERSION),2.25.1)
   PKG_MD5SUM:=ac493a78de4fee895961d025b7905be4
 endif
 
+ifeq ($(PKG_VERSION),2.26.1)
+  PKG_MD5SUM:=d2b24e5b5301b7ff0207414c34c3e0fb
+endif
+
 ifeq ($(findstring linaro, $(CONFIG_BINUTILS_VERSION)),linaro)
   PKG_SOURCE_URL:=https://releases.linaro.org/14.09/components/toolchain/binutils-linaro/
   PKG_REV:=2.24.0-2014.09
@@ -26,11 +30,11 @@ ifeq ($(findstring linaro, $(CONFIG_BINUTILS_VERSION)),linaro)
   HOST_BUILD_DIR:=$(BUILD_DIR_TOOLCHAIN)/$(BINUTILS_DIR)
 endif
 
-ifneq ($(CONFIG_BINUTILS_VERSION_2_23_ARC),)
-  PKG_SOURCE_URL:=https://github.com/foss-for-synopsys-dwc-arc-processors/binutils-gdb/archive/arc-2015.06/
-  PKG_REV:=2015.06
+ifneq ($(CONFIG_BINUTILS_VERSION_2_26_ARC),)
+  PKG_SOURCE_URL:=https://github.com/foss-for-synopsys-dwc-arc-processors/binutils-gdb/archive/arc-2016.03/
+  PKG_REV:=2016.03
   PKG_SOURCE:=$(PKG_NAME)-arc-$(PKG_REV).tar.gz
-  PKG_MD5SUM:=961a3564de857238c255c381f8e4360b
+  PKG_MD5SUM:=d4387bab089df77a8049c81980b9fa12
   BINUTILS_DIR:=$(PKG_NAME)-gdb-arc-$(PKG_REV)
   HOST_BUILD_DIR:=$(BUILD_DIR_TOOLCHAIN)/$(BINUTILS_DIR)
 endif

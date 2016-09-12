@@ -18,7 +18,9 @@ get_gpio() {
 		case "$board" in
 			"om2p" | \
 			"om2p-hs" | \
-			"om2p-hsv2")
+			"om2p-hsv2" | \
+			"om2p-hsv3" | \
+			"om5p-acv2")
 				return 12
 				;;
 			"om2pv2" | \
@@ -29,12 +31,16 @@ get_gpio() {
 			"om5p-an")
 				return 11
 				;;
+			"om5p-ac")
+				return 17
+				;;
 			"mr600v2")
 				return 15
 				;;
 			"mr900" | \
 			"mr900v2" | \
-			"mr1750")
+			"mr1750" | \
+			"mr1750v2")
 				return 16
 				;;
 		esac

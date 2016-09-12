@@ -325,6 +325,18 @@ define Build/netgear-dni
 	mv $@.new $@
 endef
 
+define Build/tplink-safeloader
+       -$(STAGING_DIR_HOST)/bin/tplink-safeloader \
+		-B $(TPLINK_BOARD_NAME) \
+		-V $(REVISION) \
+		-k $(word 1,$^) \
+		-r $@ \
+		-o $@.new \
+		-j \
+		$(wordlist 2,$(words $(1)),$(1)) \
+		$(if $(findstring sysupgrade,$(word 1,$(1))),-S) && mv $@.new $@ || rm -f $@
+endef
+
 define Build/fit
 	$(TOPDIR)/scripts/mkits.sh \
 		-D $(DEVICE_NAME) -o $@.its -k $@ \
@@ -336,7 +348,11 @@ define Build/fit
 endef
 
 define Build/lzma
-	$(STAGING_DIR_HOST)/bin/lzma e $@ -lc1 -lp2 -pb2 $(1) $@.new
+	$(call Build/lzma-no-dict,-lc1 -lp2 -pb2 $(1))
+endef
+
+define Build/lzma-no-dict
+	$(STAGING_DIR_HOST)/bin/lzma e $@ $(1) $@.new
 	@mv $@.new $@
 endef
 

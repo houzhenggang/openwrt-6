@@ -32,6 +32,7 @@ KERNEL_LOADADDR := $(loadaddr-y)
 
 KERNEL_DTB = kernel-bin | patch-dtb | lzma
 define Device/Default
+  PROFILES = Default $$(DTS)
   KERNEL_DEPENDS = $$(wildcard ../dts/$$(DTS).dts)
   KERNEL := $(KERNEL_DTB) | uImage lzma
   IMAGES := sysupgrade.bin
@@ -106,7 +107,7 @@ endef
 # $(3), optional filename suffix, e.g. "-initramfs"
 define PatchKernelLzmaDtb
 	cp $(KDIR)/vmlinux$(3) $(KDIR)/vmlinux-$(1)$(3)
-	$(LINUX_DIR)/scripts/dtc/dtc -O dtb -o $(KDIR)/$(2).dtb ../dts/$(2).dts
+	$(call Image/BuildDTB,../dts/$(2).dts,$(KDIR)/$(2).dtb)
 	$(STAGING_DIR_HOST)/bin/patch-dtb $(KDIR)/vmlinux-$(1)$(3) $(KDIR)/$(2).dtb
 	$(call CompressLzma,$(KDIR)/vmlinux-$(1)$(3),$(KDIR)/vmlinux-$(1)$(3).bin.lzma)
 endef

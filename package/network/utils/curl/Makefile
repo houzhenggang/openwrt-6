@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2007-2015 OpenWrt.org
+# Copyright (C) 2007-2016 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=curl
-PKG_VERSION:=7.47.0
+PKG_VERSION:=7.50.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
@@ -18,7 +18,7 @@ PKG_SOURCE_URL:=http://curl.haxx.se/download/ \
 	ftp://ftp.planetmirror.com/pub/curl/ \
 	http://www.mirrormonster.com/curl/download/ \
 	http://curl.mirrors.cyberservers.net/download/
-PKG_MD5SUM:=85c58a00412476993050cb242a3f365d
+PKG_MD5SUM:=9e463ff8fdc1b5daa81c850c514980ec
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=COPYING
@@ -65,7 +65,8 @@ PKG_CONFIG_DEPENDS:= \
   CONFIG_LIBCURL_THREADED_RESOLVER \
   CONFIG_LIBCURL_TLS_SRP \
   CONFIG_LIBCURL_UNIX_SOCKETS \
-  CONFIG_LIBCURL_VERBOSE
+  CONFIG_LIBCURL_VERBOSE \
+  CONFIG_LIBCURL_NTLM
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -98,7 +99,9 @@ define Package/libcurl/config
   source "$(SOURCE)/Config.in"
 endef
 
-TARGET_CFLAGS += $(FPIC)
+TARGET_CFLAGS += $(FPIC) -ffunction-sections -fdata-sections
+TARGET_CPPFLAGS += $(if $(CONFIG_LIBCURL_NTLM),,-DCURL_DISABLE_NTLM)
+TARGET_LDFLAGS += -Wl,--gc-sections
 
 CONFIGURE_ARGS += \
 	--disable-debug \
@@ -106,7 +109,6 @@ CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-static \
 	--disable-manual \
-	--without-ca-bundle \
 	--without-nss \
 	--without-libmetalink \
 	--without-librtmp \
@@ -114,11 +116,11 @@ CONFIGURE_ARGS += \
 	$(call autoconf_bool,CONFIG_IPV6,ipv6) \
 	\
 	$(if $(CONFIG_LIBCURL_AXTLS),--with-axtls="$(STAGING_DIR)/usr" --without-ca-path,--without-axtls) \
-	$(if $(CONFIG_LIBCURL_CYASSL),--with-cyassl="$(STAGING_DIR)/usr" --without-ca-path,--without-cyassl) \
-	$(if $(CONFIG_LIBCURL_GNUTLS),--with-gnutls="$(STAGING_DIR)/usr" --with-ca-path=/etc/ssl/certs,--without-gnutls) \
-	$(if $(CONFIG_LIBCURL_OPENSSL),--with-ssl="$(STAGING_DIR)/usr" --with-ca-path=/etc/ssl/certs,--without-ssl) \
-	$(if $(CONFIG_LIBCURL_POLARSSL),--with-polarssl="$(STAGING_DIR)/usr" --with-ca-path=/etc/ssl/certs,--without-polarssl) \
-	$(if $(CONFIG_LIBCURL_MBEDTLS),--with-mbedtls="$(STAGING_DIR)/usr" --without-ca-path,--without-mbedtls) \
+	$(if $(CONFIG_LIBCURL_CYASSL),--with-cyassl="$(STAGING_DIR)/usr" --without-ca-path --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt,--without-cyassl) \
+	$(if $(CONFIG_LIBCURL_GNUTLS),--with-gnutls="$(STAGING_DIR)/usr" --without-ca-bundle --with-ca-path=/etc/ssl/certs,--without-gnutls) \
+	$(if $(CONFIG_LIBCURL_OPENSSL),--with-ssl="$(STAGING_DIR)/usr" --without-ca-bundle --with-ca-path=/etc/ssl/certs,--without-ssl) \
+	$(if $(CONFIG_LIBCURL_POLARSSL),--with-polarssl="$(STAGING_DIR)/usr" --without-ca-bundle --with-ca-path=/etc/ssl/certs,--without-polarssl) \
+	$(if $(CONFIG_LIBCURL_MBEDTLS),--with-mbedtls="$(STAGING_DIR)/usr" --without-ca-path --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt,--without-mbedtls) \
 	\
 	$(if $(CONFIG_LIBCURL_LIBIDN),--with-libidn="$(STAGING_DIR)/usr",--without-libidn) \
 	$(if $(CONFIG_LIBCURL_SSH2),--with-libssh2="$(STAGING_DIR)/usr",--without-libssh2) \
